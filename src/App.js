@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Task from './components/Task';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -6,7 +6,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 function App() {
 
   const [ input, setInput ] = useState("");
-  const [ tasks, setTasks ] = useState([]);
+  const [ tasks, setTasks ] = useState(JSON.parse(localStorage.getItem('tasks')) || []);
+
+  useEffect(() => {
+    localStorage.setItem('tasks',JSON.stringify(tasks))
+  })
 
   const handleAddTask = e => {
     e.preventDefault();
@@ -30,8 +34,8 @@ function App() {
 
   return (
     <div className="App">
-      <form onSubmit={ handleAddTask } className="mx-auto my-5 col-3">
-        <h2 className="text-center">Add A Task:</h2>
+      <form onSubmit={ handleAddTask } className="mx-auto my-5 col-4">
+        <h2 className="header text-center">To Do List:</h2>
         <div className="form-group d-flex">
           <input 
             type="text" 
